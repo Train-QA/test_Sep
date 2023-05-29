@@ -1,0 +1,54 @@
+package Day01;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Home1 {
+    public static void main(String[] args) {
+    	   System.setProperty("webdriver.chrome.driver", "https://subscribe.stctv.com/sa-ar?");
+
+           // Create a new instance of the Chrome driver
+           WebDriver driver = new ChromeDriver();
+
+           // Navigate to the URL
+           driver.get("https://subscribe.stctv.com");
+
+           // Define the countries to select
+           String[] countries = {"Saudi Arabia", "الكويت", "Bahrain"};
+
+           for (String country : countries) {
+               // Find and click on the country selection dropdown
+               WebElement countryDropdown = driver.findElement(By.id("country-dropdown"));
+               countryDropdown.click();
+
+               // Find and select the country from the dropdown
+               WebElement countryOption = driver.findElement(By.xpath("//option[text()='" + country + "']"));
+               countryOption.click();
+
+               // Wait for the page to load the subscription details for the country
+               // You can use explicit or implicit waits here to ensure the elements are loaded
+
+               // Validate the subscription package type
+               WebElement packageTypeElement = driver.findElement(By.id("package-type"));
+               String packageType = packageTypeElement.getText();
+               System.out.println("Package Type for " + country + ": " + packageType);
+
+               // Validate the subscription price
+               WebElement priceElement = driver.findElement(By.id("price"));
+               String price = priceElement.getText();
+               System.out.println("Price for " + country + ": " + price);
+
+               // Validate the subscription currency
+               WebElement currencyElement = driver.findElement(By.id("currency"));
+               String currency = currencyElement.getText();
+               System.out.println("Currency for " + country + ": " + currency);
+
+               
+               System.out.println("------------------------");
+           }
+
+           // Close the browser
+           driver.close();
+    }
+}
